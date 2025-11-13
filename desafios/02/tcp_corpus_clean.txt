@@ -1,0 +1,326 @@
+one tcp ’ critical function congestion control objective book provide overview topic special emphasis analytical modeling congestion control protocol
+tcp ’ congestion control algorithm ha described largest human-made feedback- controlled system world
+several widely deployed legacy tcp congestion control algorithm
+provides description tcp reno algorithm discusses active queue management aqm
+tcp vega described provides overview rest chapter book
+original tcp tahoe algorithm descendant fall congestion control category absence support network node way detect congestion filling network buffer detecting subsequent packet drop sign con- gestion
+algorithm tcp vega operate system around knee without requiring special support network node
+served primary mean congestion control internet introduction tcp slow start algorithm
+recently rate-based control ha used tcp friendly rate control tfrc algorithm used streaming application
+however even video industry ha settled scheme us tcp congestion control reason explained
+using taxonomy tcp congestion control classified window-based algorithm operates end-to-end basis us implicit feedback network detect congestion
+data packet created sn field tcp header filled current value tsn sender increment tsn counter number byte data portion packet
+note even though tcp maintains byte counter keep track window size con- gestion control algorithm described next often specified term packet size
+packet used calculation size equal tcp packet size
+tcp us design philosophy dropped packet best indicator network congestion fall within implicit congestion indicator category
+tcp slow start wa first designed wa feedback could expected simpler router existed time
+alluded tcp us two different mechanism detect packet loss
+book assume legacy tcp implies reno understanding sys- tem ha also implemented new reno change
+packet loss trigger congestion avoidance tcp source take action reducing window size
+multiple tcp session sharing buffer bottleneck node algorithm cause synchronized packet drop across session
+ even single session tail-drop feedback tends drop multiple packet time trigger tcp rto based retransmission mechanism attendant drop window size one packet
+ecn system queue doe discard packet instead mark ecn bit tcp packet header
+algorithm called tcp vega us end-to-end packet delay measure congestion rather packet drop
+idea ha proven influential ha inspired design several congestion control protocol wide use today including compound tcp ctcp default protocol window server see low extra delay background transport ledbat used background data transfer bit-torrent file sharing service see fast tcp wa designed high-speed network see
+tcp vega estimate level congestion network calculating difference expected actual data rate us adjust tcp window size
+tcp vega try maintain “ right ” amount queued data network
+note mechanism also eliminates oscillatory behavior tcp reno reducing end-to-end latency jitter connection tends keep packet network
+issue tcp vega pointed mo colleague
+ha detailed discussion tcp model starting simple model using fluid approximation sophisticated model using stochastic theory
+case tcp reno source rate control rule known theory used derive network utility function reno optimizes
+work wa moti- vated finding solution performance problem tcp reno ha wireless link
+chapter describes tcp westwood solved problem keeping esti-mate data rate connection bottleneck node
+thecombination tcp end-to-end transport layer link layer retransmissions arq for-ward error correction fec coding wireless link also analyzed using result
+one consequence application control theory tcp congestion control described wa realization tcp reno wa inherently unstable delay-bandwidth prod-uct network became large even large bandwidth
+result number ofnew congestion control design suggested objective solving problem introduction high speed tcp hstcp tcp bic tcp cubic compound tcp ctcp described chapter
+currently tcp cubic serf default congestion control algorithmfor linux server result widely deployed tcp reno
+industry ha settled use tcp transmitting video even though first cut seemsto unlikely match video ’ real-time need
+problem wa solved combination large receive playout buffer smoothen fluctuation caused tcp rate control ingenious algorithm called http adaptive streaming ha
+internetworking tcp/ip
+work ha led explicit formula average throughput window size tcp connection function para- meter delay-bandwidth product node buffer capacity packet drop rate
+example development theory led realization tcp becomes unstable link speed round trip delay becomes large
+lot early work congestion control modeling wa inspired team working lawrence berkeley lab published number influential paper simulation-based anal- ysis tcp congestion control
+one key insight came work discovery lower packet drop rate tcp reno ’ throughput inversely proportional square root drop rate also known squa re-root formula
+tcp model classified single connection model model multinode net- work
+rest chapter organized follows derive formula tcp throughput function various system parameter
+also generalize tcp ’ window increment rule come additive increase/multiplicative decrease aimd system analyze system throughput analyzes sophisticated model packet loss process feature correlated loss
+consider case multiple tcp connection share common bottleneck analyze performance
+define following w tcp window size packet time wmax maximum tcp window size wf window size packet lost ms tcp packet size byte c bottleneck node capacity packets/sec b buffer count bottleneck node packet
+ct wmax leaf w ct packet tcp window unaccounted indeed found queued bottleneck node
+continue analysis tcp reno case w max
+presence overflow variation window size w function time shown tcp reno
+hence number buffer exceeds delay-bandwidth product connection periodic packet loss caused buffer overflow doe result reduction tcp throughput stay link capacity c. combining condition buffer overflow get ct b ct condition cause buffer overflow result reduction throughput
+increase tcp window size happens two phase shown
+hence rate acks returning sender equal tcp throughput r /t
+advantage approach possible obtain full distribution tcp window size opposed mean value
+wi tcp window size end thcycle ai duration ith cycle xi number subcycles thcycle yi number packet transmitted thcycle ravg average tcp throughput p probability packet lost random link error given either first packet round preceding packet round lost
+within subcycle window size increase one packet tcp go congestion avoidance phase end cycle window size increase x ipackets
+early analysis work tcp throughput presence packet drop wa done floyd
+used derive expression distribution maximum tcp window size w done next
+protocol high speed tcp hstcp tcp bic tcp fast tcp ledbat use adaptive scheme vary value depending current window size congestion feedback
+tcp reno us rather aggressive reduction window size half cause problem higher speed link
+protocol westwood data center tcp dctcp hstcp vary b function congestion feedback westwood dctcp window size hstcp
+however exercise well worth effort provides several new insight way tcp function real-world environment
+consider following system k tcp c onnections passing thr ough bottleneck link
+simulation shown red indeed achieves objective result ratio throughput tcp connection using red varies first power round trip latency rather square
+reading tcp also analyzed embedding markov chain various point window size evo- lution using packet loss probability control state transition
+performance tcp/ip network high bandwidth-delay pro- duct random loss
+macroscopic behavior tcp congestion avoidance algo- rithm
+tcp traffic modeling via limit theorem
+stochastic differential equation tcp window size
+window distribution multiple tcp random loss queue
+misra v gong w towsley d. fluid based analysis network aqm router supporting tcp flow application red
+indeed tcp put theoretical framework modeling fluid limit theory enables u compute global utility function tcp optimizes
+fluid flow model also used answer question tcp ’ stability link speed round trip latency varied
+technique lead interesting result fact tcp reno active queue management aqm inherently unstable especially combination high band- width large propagation delay encountered
+technique developed chapter analyzing tcp constitute useful toolkit used analyze congestion control algorithm
+rest chapter organized follows use lagrangian optimization theory analyze congestion control problem derive expression utility function tcp reno
+distributed procedure strongly reminiscent way tcp congestion control operates hence come surprise put framework
+hence tcp congestion control interpreted solution problem maximizing global network utility function constraint
+next section obtain expression utility function u tcp reno
+section use first approach fluid model description tcp reno used derive network utility function optimizes
+start deriving equation tcp reno ’ window dynamic fluid limit
+section use theory developed analyze generalized version tcp congestion control algorithm nonlinear window increment decrement rule called gaimd
+line investigation wa originally pursued design novel congestion control algorithm traffic source video may well tcp reno
+define algorithm tcp-friendly utility function coincides tcp reno
+hence algorithm tcp friendly
+particular assume n homogeneous tcp source pas single bottleneck node
+intuitive reason session average fluctuation high variation tcp window size especially decrease half detecting congestion
+note choice k pprecisely cancel high loop gain caused tcp ’ window dynamic
+encounter congestion control protocol tcp bic later book see able operate stable manner high-speed network even tradi- tional aqm scheme
+network accommodate sophisticated aqm algorithm case tcp/ ip network ap-based algorithm equivalent effect system stability performance derivative-based feedback
+tcp vega algorithm ha shown minimize utility function
+α uk rkþ rk network resource allocation corresponding utility function called weighted mini- mal potential delay fair shown chapter function tcp reno minimizes
+duality model tcp queue management algorithm
+designing improved controller aqm router sup- porting tcp flow
+linear stability tcp/red scalable control
+tcp used transport protocol network run number problem commonly found wireline network enumerated
+fundamental problem hobble tcp wireless link fact differ- entiate congestion link-error related packet drop
+retransmitting lost packet quickly lower layer stack called automatic retransmissions arq tcp doe see drop
+introducing special algorithm tcp source able ifferentiate congestion drop link-error related drop
+discus one algorithm called tcp westwood show ha effect throughput reduction link error rate p. 
+splitting end-to-end tcp connection two part wireless link fall part whose congestion control ha en specially designed wirele environment
+use analytical tool developed performance modeling tcp running wireless link implement technique forward error correction fec automatic retransmissions arq improve robustness
+issue cause performance problem tcp wireless network following  higher link error rate ha traditionally biggest problem wireless network caused difficult propagation condition air leading high link attenuation andmultipath creating reflection surrounding object
+caused bythe fact tcp window never perfectly matched varying link capacity attimes capacity low window much bigger buffer occupancy increase shown .server
+time tcp source stop receiving acks disconnect time order millisecond retransmission timer expires thus affecting tcp throughput
+uplink ha much lower bandwidth compared downlink inter-ack time interval longer good estimate bandwidth ownlink bottleneck capacity hence tcp ’ self-clocking mechanism break
+done abandoning end-to-end nature tcp transport layer favor multiple tcp-controlled segment series
+tcp connection server wan mobile client split two part first tcp connection called extending server gateway second tcp connection called extending gateway client node
+benefit split-connection tcp design following 
+tcp congestion control algorithm operating segment network tailored specific characteristic network
+way tcp throughput varies function round trip latency link error rate split-connection design result significant boost throughput even case legacy tcp used connection
+rn throughput end-to-end non-split tcp connection rsp end-to-end throughput split-tcp connection throughput split-connection case
+hence necessary introduce additional mechanism boost ’ performance tcp reno deliver
+however assumes plain tcp reno used
+example satellite network modify window increment rule use much larger window size one allowed tcp reno boost split network performance
+main issue split tcp design following 
+additional complexity split tcp requires gateway maintain per-connection state
+end-to-end throughput split tcp may show much improvement connection wireless network performing badly
+hence split tcp ha go hand hand additional mechanism boost performance
+split tcp violates end-to-end semantics tcp sending host may receive ack packet ha delivered client
+note enhancement also implemented non-split tcp connection also result improvement performance
+suggestion made improve tcp performance presence wireless link impairment fall following area
+case wireless link get disconnected extended period time tcp sender undergo multiple time-out prevent transmission restarting even link come back
+tcp westwood source attempt measure rate traffic received thus bottleneck rate f iltering stream returning acks
+pseudocode abe estimated connection bandwidth source rtt_min estimated value minimum round tri p delay seg_size tcp packet size
+follows tcp westwood fall class additive increase/multiplicative decrease aimd algorithm however amount decrease may less tcp reno depending congestion state network
+describe lda wa proposed fu liew part tcp veno algorithm
+mechanism wa inspired rule used tcp vega detect increase queue size along connection ’ path
+reader may recall description tcp vega algorithm us difference expected throughput actual throughput value gauge amount congestion network
+happens tcp source time perhaps resulting large total time-out interval
+situation described avoided putting tcp source state freeze retransmit timer doe cut congestion window size enters persist mode
+however unlike i-tcp gateway doe ack packet fixed host immediately reception wait packet ha ack ’ client system maintains end-to-end tcp semantics
+design gateway node responsible detecting whether mobile client disconnect state monitoring acks flowing back second tcp connection
+freeze tcp protocol goff et al
+note freeze tcp implemented context split-tcp architecture zero window acks sent mobile client gateway node freeze second tcp connection access network
+also ca fast_recovery explicit_retransmit usual tcp reno slow start congestion avoidance fast recovery packet retransmission procedure described
+example rate_control procedure one given tcp westwood
+compared arq fec ha advantage arq result additional variable latency retransmissions throw tcp r etransmit timer issue fec
+x number link-level transmission unit called pdus formed single tcp packet minimum round trip latency tcp q probability pdu received error absence fec qt probability pdu received error presence fec n k parameter fec scheme us block code
+pfec n k probability tcp packet lost presence fec parameter n k c capacity link unit fec unit per second use square-root formula see derive expression tcp throughput function link fec parameter
+derive expression tcp packet loss probability p n k
+tcp packet lost one x pdus constitute arrive error
+increase fec beyond point result deterioration tcp throughput i.e. fec needed clean link
+high error rate number retransmissions required recover packet grows large resulting increase end-to-end latency cause tcp retransmit timer expire thus resulting time-out
+interaction tcp ’ retransmissions arq fact make overall performance worse used carefully
+maximum number arq retransmissions capable configured finite number ll-pdu still received error discarded let tcp recover packet
+max number retransmissions set total time significantly less tcp retransmit time-out rto interval
+reuse definition used tcp packet size kx fec block split x pdus made k fec block see
+retransmissions done maximum number time denoted m. pdu fails get even retransmissions arq-sr assumes recovered leaf recovery tcp
+tcp packet lost one constituent pdus lost
+substituting obtain following expression tcp packet loss probability p arqin
+next turn task finding average round trip latency e arq tcp packet
+note thatmi average round trip latency tcp packet excluding delay across bottleneck link
+allows u evaluate subsequently average tcp throughput using
+also presence large steady-state queue size mean transient packet burst generated slow-start phase tcp session find enough buffer result multiple packet drop leading throughput degradation
+ared wa originally designed wireline link w hich capacity c fixed variability attributable changing load link i. e. number tcp connection n
+network buffer exist absorb transient packet burst generated slow-start phase tcp reno
+per analysis lead gradual linear decrease tcp hroughput seen follows let n n n number packet transmitted nthdrop interval duration nthdrop interval respectively
+feasible change congestion algorithm remote-end server split-tcp architecture used see
+case new algorithm deployed gateway box along path leg acy tcp stack continues run server gateway
+already come across another algorithm belongs category i.e. tcp vega see
+note split-tcp design used ledbat flow present base station furthermore isolated ledbat ’ reduction rate presence regular tcp never invoked ledbat requires packet carry timestamp sender receiver us compute one-way delay sender sends computed value back sender ack packet
+use one-way delay avoids complication arise delay-based protocol tcp vega use round trip latency congestion signal result delay experienced ack packet reverse link introduce error forward delay estimate
+tcp stack source designer ’ control technique tcp westwood abe lda zrw implemented
+tcp stack source designer ’ control use split-level tcp design splitting point implemented gateway-type device
+aqm option delay-based tcp protocol ledbat vega used
+done conjunction split-connection tcp architecture regular tcp continues used core packet network
+hence sense snoop operates like tcp-aware link-level arq protocol
+cause tcp retransmit timer time even though packet lost
+i-tcp indirect tcp mobile host
+tcp
+tcp veno tcp enhancement transmission wireless access network
+comparison mechanism improving tcp performance wireless link
+chan mc ramjee r. improving tcp/ip performance third generation wireless network
+chaskar hm lakshman tv madhow u. tcp wireless link level error control analysis design methodology
+sundararaj duchamp d. analytical characterization throughput split tcp connection
+original congestion control algorithm tcp reno tahoe worked well long link speed lower scale well higher speed longer propagation delay several reason 
+using control theory framework wa shown tcp reno becomes unstable either link capacity propagation delay become large
+linux family operating system offer user choice one algorithm use place tcp reno using tcp cubic default algorithm
+algorithm modifies tcp window increase decrease rule way system able make better utilization high-speed long-distance link
+poi nted introduction case tcp reno conservativ e window increase aggressive window decrease rule
+hence situation acceptable high speed tcp variant perform aggressively standard tcp
+however deemed tolerable high-speed protocol taking link bandwidth used tcp reno anyway
+reason lower speed link congestion control algorithm able sustain smaller window size better suited coexisting tcp reno without taking away bandwidth
+response function high-speed algorithm equal lower tcp reno two curve cross
+however satisfy second requirement tcp friendliness modify packet increase rule one sev- eral way
+hstcp response function coincide tcp reno packet drop rate exceeds threshold p equivalently congestion window equal less w packet
+hstcp stable tcp reno high speed less aggressive reducing window packet loss reduces queue size oscillation bottleneck node
+tcp bic wa invented first introduced idea binary search congestion control algorithm tcp cubic wa later designed simplify design bic improve weakness
+protocol successful currently tcp cubic serf default congestion control choice linux operating system
+main idea behind tcp bic cubic grow tcp window quickly cur- rent window size far link saturation point previous loss happened close saturation point rate increase slowed see bic cubic
+bic response time graph intersects reno around point hstcp follows bic also tcp friendly lower link speed
+slope bic ’ response time first rise steeply flattens tcp reno larger link speed
+another significant innovation cubic window growth depends real time consecutive congestion event unlike tcp bic reno growth depends rate acks returning back source
+make window growth independent round trip latency multiple tcp cubic flow competing bandwidth window approximately equal
+short rtt network tcp reno grow faster cubic window increase one every rtt cubic ’ window increase rate independent rtt
+high-speed long-distance network large latency hand tcp reno able make full use available bandwidth cubic naturally scale per- formance
+came innovative way combine fairness delay-based conges- tion control approach tcp vega aggressiveness loss-based approach
+correct problem suggested system keep track congestion using tcp vega queue size estimator use aggressive window increase rule estimated queue size less threshold
+estimated queue size exceeds threshold ctcp switch less aggressive window increment rule approach one used tcp reno
+w c part window reacts loss-based congestion signal change size according rule used tcp reno
+given standard tcp congestion window evolves according per rtt wc ’ loss
+result higher link speed ctcp throughput converges toward tcp reno 
+latter case response function change round trip latency change tends tcp reno friendly lower latency
+attractive property lower latency correspond lan environment transfer still use tcp reno
+hand higher latency cubic ctcp response function diverge tcp reno cubic ctcp
+hence tcp vega adjusts window one packet per rtt depending whether number queued packet smaller greater target α
+result window adjustment fast tcp depend magnitude well sign difference
+result deployed regular tcp/ip network requires multi-bit feedback used self-contained network separated rest internet done using split tcp architecture example
+revers tcp ’ design philosophy sense congestion control intelligence network node
+contrast tcp increase one packet per window
+also true tcp westwood see whose window size reduction proportional amount queuing delay
+model steady state throughput tcp cubic
+tcp congestion avoidance algorithm identification
+avrachenkov k. comparing high speed tcp version bernoulli loss
+experimental evaluation tcp protocol high-speed network
+early year web conventional wisdom wa video streaming would done user datagram protocol udp video require absolute reliability tcp provided furthermore tcp retransmissions compatible real- time delivery video requires
+addition wa thought wide rate variation result tcp ’ congestion control algorithm would extreme support video stream whose packet rate steady doe vary much
+udp doe come congestion control algorithm wa considerable effort expended adding capability udp could use carrying video stream time coexist regular tcp traffic
+significant result work wa congestion control algorithm called tcp friendly congestion congestion control
+wa rate-based algorithm whose design wa based square-root for- mula tcp throughput derived
+sender kept estimate round trip latency packet drop rate used square root formula estimate throughput tcp connec- tion would experience condition
+video transmission landscape began change early researcher realized perhaps tcp rather udp could also used transmit video
+tcp ’ rate fluctuation thought bad video could overcome using large receive buffer dampen
+combination http/tcp video delivery several benefit including  tcp http ubiquitous video accessed web 
+video server built top tcp/http us commodity http server requires special expensive hardware software piece
+use tcp congestion control guarantee network remain stable presence high bit rate video stream
+initial implementation video http/tcp used technique called progressive download pd basically meant entire video file wa downloaded fast tcp would allow receiver ’ buffer
+fundamental improvement http/tcp deliver yo fv
+sense ha similar tcp receive flow control excep fact objective latter algo- rithm keep receive buffer overflow ing
+ha operates top tcp congestion control albeit longer time scale interaction bet ween two rich source research problem
+ha remains area active research important issue best algorithm control video bit rate interaction ha tcp interaction multiple ha stream bottleneck node still investigated
+clearly function congestion control protocol tcp provides hence video transmission system define protocol operating top tcp
+example rap used additive increase/multiplicative decrease aimd type scheme reminiscent tcp congestion control tfrc used additive increase/additive decrease aiad scheme based tcp square root formula
+ha protocol dominates video transport today us scheme differs early algorithm following way  ha built top tcp transport unlike earlier scheme based udp
+reason using tcp mentioned introduction
+keep track tcp rate video stream well receive buffer occupancy level using http protocol informs transmitter appropriate video bit rate use next
+ha adapts sending rate consequently video quality taking longer term average tcp transmit rate variation receive buffer size
+result slower variation sending rate opposed tcp congestion control varies sending rate rapidly reaction network congestion packet drop
+ha wa able improve system adding another layer rate control top tcp
+however unlike tcp ha algorithm video aware able interact video application se nder adaptively change sending rate
+mentioned introduction ha us http/tcp transporting video rather traditional rtp/udp stack
+reference tcp inner control loop reacts network congestion try match tcp send rate rate network support abr outer loop reacts rate tcp decides use try match rate video stream average tcp rate
+case tcp throughput r exceeds maximum video rate v l
+difficult problem rate buffer filled constantly fluctuating determined tcp ’ congestion control algorithm function congestive state network
+hence one objective abr algorithm avoid video rate fluctuation caused short-term bandwidth variation tcp throughput estimation error
+ use smoothing filter reduce fluctuation tcp bit rate estimate
+case congestion tcp reacts multiplicatively reducing bit rate objective abr algorithm match video bit rate tcp throughput follows also try reduce video bit rate multiplicatively
+ntb algorithm effective avoiding buffer underruns reacts instantaneously fluctuation tcp throughput
+happens download interval increased τsec- onds keep average tcp throughput r equal v l
+tcp throughput fall v l receive buffer occupancy start r educe algorithm switch back- to-back downloads
+tcp throughput exceeds maxi- mum video bit rate space chun k download time prevent buffer overflowing
+however sudden decrease tcp throughput stb able respond quickly enough result buffer underflows
+ connection higher bit rate tend see higher estimate chunk ’ tcp throughput
+simple averaging tcp throughput estimate biased outlier one chunk see high low throughput
+note ravg ni average tcp throughput average taken last chunk number configurable help dampen temporary network fluctuation
+i f b tþabtar algorithm doe change video bit rate avoid reacting short-term variation tcp throughput
+nice feature tbb algorithm enables designer explicitly control trade-off variation buffer occupancy fluctuation video bit rate response varying tcp throughput
+also implies tcp rate r lie video bit rate v mand v see buffer occupancy con- stantly switch back forth vm f mapping function shown result video bit rate switching two value well
+tbb algorithm avoids keeping track tcp throughput addition buffer occupancy explained previous section
+note analogy tcp case objective controller wa regulate bottle- neck buffer occupancy reference level
+possible derive equation predicted video bit rate u na function buffer size difference estimated tcp throughput r n turn determines buffer occupancy level combination actual tcp throughput thus closing control loop
+b receive buffer occupancy time r tcp throughput time download chunk k start time kand finish time download next chunk start time i.e. assumed chunk downloaded back-to-back manner implies maximum tcp throughput less maximum video bit rate v l
+note qoe maxk finite-horizon stochastic optimal control problem source randomness tcp throughput r
+algorithm atb stb use measurement main input even algorithm tbb bbrs based buffer size measurement affected tcp throughput transmit time chunk determines whether buffer grows shrink inversely proportional tcp throughput
+tcp throughput wa measured using using various value link subscription shown
+consideration similar used follows two ha session sharing link one ha higher bit rate tcp throughput estimate higher bit rate connection also higher lower bit rate connection result unfairness
+higher bit rate connection occupies link longer time result period ha access entire link bandwidth thus pushing tcp throughput
+one theimportant issue researcher started investigate recently doe abr ratecontrol interact tcp congestion control multiple abr-controlled stream interactwith one another
+topic discussed following two subsection section describe consequence using tcp transporting individual ha chunk
+consequently scenario result tcp timer retransmission timeout rto expiry followed reset congestion window minimum value
+hence interaction ha tcp result burst transmission start chunk result rto end chunk
+main finding wa ha stream suffer called “ downward spiral ” effect presence competing tcp flow
+absence competing tcp flow ha stream settle usual on-off sequence
+ competing tcp flow started fill buffer bottleneck node time video flow period
+result video flow turn experience high packet loss result decrease tcp window size
+also chunk transmission finish video stream tcp window ha chance recover
+result abr estimate video rate actually estimate tcp flow video riding tcp throughput suffers presence competing flow reason explained earlier follows abr algorithm badly underestimate available link bandwidth
+tcp throughput fall send buffer server start fill see information used backpressure video server
+multimedia streaming via tcp analytic performance study
+dimensioning receiver buffer requirement unidirectional vbr video streaming tcp
+result characteristic normal tcp congestion control i.e. tcp reno doe perform well following reason  tcp requires large buffer indeed buffer size greater equal delay- bandwidth product connection fully use full bandwidth link shown congestion control
+end-to-end delay connection tcp much larger tolerated dcns
+delay caused tcp ’ tendency fill link buffer capacity fully use link
+algorithm retain end-to-end congestion control philosophy tcp data center tcp dctcp
+multi-path tcp mptcp
+discusses dctcp algorithm explores deadline aware algorithm including tcp devoted mptcp describes incast problem dcns
+traditionally two class congestion control algorithm used control queuing latency  delay-based protocol tcp vega use increase measured r ound trip latency rtt sign growing queue length hen ce congestion
+rely heavily accurate rtt measurement problem dcn environment rtts extremely small order hundred microsecond s. hence small noise fl uctuations latency become indistinguishable congestion cause tcp vega react error 
+note every packet get marked αestimates probability queue size greater k. feature tcp rate control slow start additive increase congestion avoidance recovery lost packet left unchanged
+follows amplitude queue size oscillation dctcp cdp/ much smaller oscillation tcp reno cdþ
+one issue dctcp doe take deadline account instead tcp heritage try assign link bandwidth fairly flow irrespective deadline
+subsection describe two algorithm namely deadline aware datacenter tcp tcp
+basic idea behind tcp modulate congestion window size based deadline information extent congestion
+also able coexist tcp flow without degrading performance
+clear whether rate allocation strategy coexist legacy tcp tcp flow recognize ’ honor based bandwidth allocation
+mean tcp flow grab lot bandwidth switch able meet rate allocation promise made source
+ multiple subflows established sender ’ tcp stack stripe data across subflows
+note requirement application aware mptcp used place tcp 
+ note tcp window increased a/w per ack flow get window size proportional αp see
+moreover use mptcp lead new interconnection topology feasible regular tcp
+justification traditional tcp congestion control requires least one rtt react congestion slow dcns congestion build quickly less rtt second
+unlike tcp pdq pfabric decouples flow priority scheduling rate control
+pfabric us simplified form tcp source without conges- tion avoidance fast retransmits dupacks
+concluded tcp model application running vms incorporate additional delay round trip latency formula i.e. delay caused end host virtualization
+data center tcp dctcp
+deadline aware datacenter tcp tcp
+understanding tcp incast collapse datacenter network
+survey tcp incast data center network
+towards minimal delay deadline driven datacenter tcp
+one domain data center networking discusses server-to-server networking dcns using ethernet switching fabric tcp running top
+however using tcp congestion control mechanism work fcoe san tcp doe drop packet course normal operation
+source start line rate equivalent tcp slow-start mechanism
+result incorporates feature keep falling performance stability trap tcp often run
+unlike tcp rp algorithm doe get positive acks network hence need alternative mechanism increasing sending rate
+note fr similar way binary increase congestion control bic tcp source increase window size packet drop see
+gcc algorithm doe run top tcp instead us real time transport protocol rtp sending data accompanying real time control protocol rtcp obtaining feedback receiver
+par- ticular remy doe make use two variable almost every tcp algorithm us packet drop rate p round trip latency t. packet drop rate used well- functioning algorithm naturally lead network small queue loss
+discussion follows appropriate aqm scheme node function application running top tcp connection
+hence sdn controller match type application using tcp connection appropriate aqm algorithm node connection pass
+delivery real-time medium actually fairly large subcategory characterized following  rather tcp real-time stream make use real time transport protocol rtp transport implemented top udp
+unlike tcp every rtp packet ack ’
+traditionally tcp friendly rate control algorithm tfrc ha used purpose see floyd et al
+came across problem minimizing queuing delay variable capacity link context tcp solution included using aqm technique codel end-to-end algorithm low extra delay background transport ledbat
+note ledbat directly applicable relies regular flow tcp acks feedback
