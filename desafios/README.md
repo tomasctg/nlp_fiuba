@@ -1,40 +1,87 @@
-# Evolución de técnicas en procesamiento de lenguaje natural
+# Portafolio de procesamiento de lenguaje natural
 
-Este repositorio consolida una serie de prácticas progresivas en el campo del procesamiento de lenguaje natural (NLP). A través de cuatro etapas bien diferenciadas, se documenta el avance desde la manipulación básica de texto y modelos probabilísticos hasta la implementación de arquitecturas neuronales complejas para tareas de traducción automática.
+Este repositorio consolida mi trabajo y evolución técnica en la materia de especialización en inteligencia artificial. El proyecto documenta el recorrido desde los fundamentos estadísticos del análisis de texto hasta la implementación de arquitecturas de "Deep Learning" avanzadas para traducción automática.
 
-## Desafío 1: vectorización y clasificación probabilística
+El objetivo central es demostrar cómo resolver problemas complejos de lenguaje (clasificación, entendimiento semántico y generación) optimizando tanto la precisión de los modelos como el uso de recursos computacionales.
 
-La etapa inicial se centró en la comprensión de cómo las máquinas interpretan el texto. El objetivo principal fue: transformar datos no estructurados en representaciones numéricas.
+## Tecnologías utilizadas
 
-Se utilizaron técnicas de bolsa de palabras (bag of words) y tf-idf para convertir documentos de texto en vectores dispersos. Posteriormente, se implementaron clasificadores bayesianos ingenuos (naive bayes), lo que permitió establecer una línea base de rendimiento para tareas de categorización de noticias. Esta fase asentó las bases sobre la importancia del preprocesamiento y la limpieza de datos antes de cualquier modelado.
+* **Lenguaje:** Python 3.10+
+* **Deep learning:** TensorFlow, Keras (capas funcionales y secuenciales)
+* **Procesamiento de datos:** Pandas, Numpy, NLTK
+* **Vectorización y ML:** Scikit-learn, Gensim (Word2Vec)
+* **Visualización:** Matplotlib, Seaborn
 
-## Desafío 2: representaciones distribuidas y embeddings
+---
 
-El segundo hito abordó la limitación de las representaciones dispersas, donde se pierde el contexto semántico entre palabras. El enfoque cambio hacia la creación de espacios vectoriales densos.
+## Evolución de los desafíos
 
-Utilizando un corpus técnico específico sobre telecomunicaciones, se entrenaron modelos de word2vec. Este proceso requirió un preprocesamiento más sofisticado para extraer texto limpio desde fuentes pdf. El resultado fue la capacidad de capturar relaciones semánticas y analogías entre términos técnicos, demostrando que el significado puede ser codificado mediante la co-ocurrencia de palabras en un contexto compartido.
+### Desafío 1: vectorización y clasificación probabilística
 
-## Desafío 3: modelos de lenguaje y redes recurrentes
+El punto de partida fue entender cómo transformar texto libre en una representación numérica útil. Trabajando con el dataset "20 Newsgroups", el objetivo fue clasificar noticias en categorías temáticas.
 
-En esta fase se introdujo la dimensión temporal y secuencial del lenguaje. El propósito fue predecir el siguiente caracter en una secuencia para generar texto coherente.
+**Metodología:**
+* Limpieza de texto (eliminación de headers/footers).
+* Comparación de técnicas: `CountVectorizer` vs `TfidfVectorizer`.
+* Implementación de un modelo Naive Bayes (`ComplementNB`) que demostró ser robusto ante clases desbalanceadas.
 
-Se compararon tres arquitecturas de redes neuronales: rnn simple, lstm y gru. Este experimento evidenció los problemas de desvanecimiento del gradiente en redes simples y cómo las celdas con compuertas (lstm y gru) resuelven este problema al mantener memoria a largo plazo. Se implementaron generadores de datos eficientes y métricas como la perplejidad para evaluar la calidad de los textos científicos generados por el modelo.
 
-## Desafío 4: arquitectura encoder-decoder para traducción
+### Desafío 2: embeddings y semántica distribuida
 
-La etapa final representa la culminación del aprendizaje, integrando embeddings pre-entrenados y redes recurrentes en una arquitectura sequence-to-sequence (seq2seq). El desafío consistió en construir un sistema traductor de inglés a español.
+Para superar la limitaciones de los vectores dispersos (donde las palabras son islas aisladas), implementé modelos de embeddings propios.
 
-Este modelo utiliza un codificador para procesar la secuencia de entrada y comprimirla en un vector de contexto, y un decodificador para generar la secuencia de salida en el idioma objetivo. Se utilizaron embeddings de glove para inicializar los pesos y mejorar la convergencia. Este proyecto demuestra la capacidad de las redes neuronales para mapear secuencias complejas de longitud variable, superando la generación simple de caracteres vista en la etapa anterior.
+**Hitos técnicos:**
+* Entrenamiento de un modelo Word2Vec (Skip-gram) sobre un corpus técnico de telecomunicaciones.
+* El modelo logró aprender que "congestion" está semánticamente cerca de "avoidance" y "window", capturando relaciones técnicas sin diccionarios previos.
+* Se generaron proyecciones en 2D y 3D (t-SNE) para visualizar estos clusters semánticos.
 
-## Resumen de la evolución técnica
+### Desafío 3: generación de lenguaje con RNNs
 
-La siguiente tabla resume el incremento de complejidad y las tecnologías claves adoptadas en cada etapa:
+Aquí la complejidad aumentó al trabajar con secuencias. El objetivo fue crear un modelo capaz de escribir texto científico carácter por carácter.
 
-| desafío | enfoque principal | representación de datos | arquitectura del modelo | objetivo |
-| :--- | :--- | :--- | :--- | :--- |
-| 1 | estadística clásica | vectores dispersos (tf-idf) | naive bayes | clasificación de texto |
-| 2 | semántica distribuida | vectores densos (embeddings) | word2vec (red neuronal superficial) | similitud semántica |
-| 3 | modelado secuencial | secuencias de caracteres | rnn, lstm, gru | generación de texto |
-| 4 | mapeo de secuencias | secuencias de palabras + glove | encoder-decoder (seq2seq) | traducción automática |
+**Detalles de implementación:**
+* Se compararon arquitecturas `SimpleRNN`, `LSTM` y `GRU`.
+* La métrica de **perplejidad** mostró que las celdas con memoria (LSTM/GRU) son indispensables para mantener la coherencia en frases largas.
+* Se implementó **Beam Search** para mejorar la fluidez del texto generado, solucionando los bucles repetitivos típicos de la búsqueda voraz (greedy search).
 
-Se observa una clara transición desde métodos que tratan las palabras como unidades independientes hacia modelos que comprenden el contexto, la secuencia y, finalmente, la relación compleja entre dos estructuras lingüísticas diferentes.
+### Desafío 4: traducción automática (Seq2Seq)
+
+El proyecto final consistió en construir un traductor inglés-español utilizando una arquitectura Encoder-Decoder. Este desafío integró todos los conocimientos previos: manejo de embeddings, redes recurrentes y procesamiento de secuencias complejas.
+
+![Curvas de entrenamiento](img/trainning.png)
+
+*Figura 2: evolución de la precisión y pérdida durante el entrenamiento del traductor.*
+
+---
+
+## Ingeniería de datos: el uso de DataLoaders
+
+Uno de los aspectos más críticos en proyectos de NLP profesional es el manejo de la memoria RAM. En el **Desafío 4**, trabajar con un vocabulario extenso y secuencias largas hacía inviable cargar todo el dataset en memoria como un array tradicional de Numpy.
+
+Para solucionar esto, implementé un generador de datos personalizado heredando de `tf.keras.utils.Sequence`.
+
+### ¿Por qué es importante?
+
+1.  **Carga bajo demanda:** en lugar de pre-procesar y guardar en memoria una matriz gigante de *One-Hot Encoding* (que podría pesar decenas de GBs), el `TranslationGenerator` procesa solo un "batch" (lote) de datos a la vez, justo antes de enviarlo a la GPU.
+2.  **Escalabilidad:** permite entrenar con datasets infinitamente grandes, limitados solo por el tiempo de cómputo y no por la RAM disponible.
+3.  **Eficiencia:** al heredar de la clase `Sequence`, Keras puede usar multiprocesamiento para cargar el siguiente lote de datos mientras la GPU está ocupada entrenando el actual, reduciendo los tiempos muertos.
+
+Este enfoque permitió entrenar el modelo con el dataset completo (~120k sentencias).
+
+---
+
+## Resumen técnico
+
+| Desafío | Técnica clave | Modelo principal | Logro destacado |
+| :--- | :--- | :--- | :--- |
+| 1 | TF-IDF | Naive Bayes | Clasificación eficiente de texto crudo |
+| 2 | Word2Vec | Skip-Gram | Captura de relaciones semánticas propias |
+| 3 | Generación de texto | LSTM / GRU | Implementación de decodificación Beam Search |
+| 4 | Seq2Seq + DataLoaders | Encoder-Decoder | Entrenamiento eficiente con generadores dinámicos |
+
+## Instalación y ejecución
+
+1.  Clonar este repositorio.
+2.  Instalar las dependencias: `pip install -r requirements.txt`
+3.  Para replicar los entrenamientos, ejecutar los notebooks en orden numérico.
+4.  Asegúrese de descargar los datasets correspondientes (links incluidos en cada notebook).
